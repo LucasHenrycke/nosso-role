@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nosso Rolê Perfeito ✨</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            darkbg: '#09090b',
+            cardbg: '#121217',
+            cyanNeon: '#06b6d4',
+            purpleNeon: '#a855f7',
+          },
+          boxShadow: {
+            'glow-cyan': '0 0 20px -3px rgba(6, 182, 212, 0.45)',
+            'glow-purple': '0 0 20px -3px rgba(168, 85, 247, 0.45)',
+            'glow-combo': '0 0 25px -2px rgba(168, 85, 247, 0.35), 0 0 15px -3px rgba(6, 182, 212, 0.3)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #09090b;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(168, 85, 247, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(18, 18, 23, 0.8) 0px, transparent 100%);
+      background-attachment: fixed;
+    }
+
+    .glass-panel {
+      background: rgba(18, 18, 23, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-option {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-option:hover {
+      transform: translateY(-3px);
+      border-color: rgba(6, 182, 212, 0.6);
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+    }
+
+    .card-selected {
+      border-color: #a855f7 !important;
+      background: rgba(168, 85, 247, 0.12) !important;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.35) !important;
+    }
+
+    .btn-gradient {
+      background: linear-gradient(135deg, #06b6d4 0%, #a855f7 100%);
+      transition: all 0.3s ease;
+    }
+
+    .btn-gradient:hover:not(:disabled) {
+      opacity: 0.95;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+      transform: translateY(-1px);
+    }
+
+    /* Custom scrollbar for options */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(18, 18, 23, 0.5);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #a855f7;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100 flex items-center justify-center p-4 font-sans antialiased selection:bg-purpleNeon selection:text-white">
+
+  <div class="glass-panel w-full max-w-xl rounded-3xl p-6 md:p-8 relative overflow-hidden shadow-2xl border border-white/10">
+    
+    <!-- HEADER / BARRA DE PROGRESSO -->
+    <div id="progress-bar-container" class="mb-6">
+      <div class="flex justify-between items-center text-xs font-semibold mb-2">
+        <span id="step-indicator" class="text-cyanNeon uppercase tracking-wider">Passo 1 de 4</span>
+        <span class="text-purpleNeon flex items-center gap-1">✨ Surpresa Especial</span>
+      </div>
+      <div class="w-full bg-zinc-900/80 h-2 rounded-full overflow-hidden border border-white/5">
+        <div id="progress" class="bg-gradient-to-r from-cyanNeon to-purpleNeon h-full w-1/4 transition-all duration-500 rounded-full"></div>
+      </div>
+    </div>
+
+    <!-- PASSO 1: OS 4 GATOS (A PEGADINHA) -->
+    <div id="step-1" class="step transition-all duration-300">
+      <div class="text-center mb-5">
+        <h2 class="text-2xl font-extrabold bg-gradient-to-r from-cyanNeon via-white to-purpleNeon bg-clip-text text-transparent">
+          Quem é o seu gatinho favorito? 🐱
+        </h2>
+        <p class="text-xs text-zinc-400 mt-1">Hora de tomar a decisão mais difícil do mundo:</p>
+      </div>
+      
+     <!-- Grid dos 4 Gatos ajustada para fotos verticais -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+  
+  <!-- 1. Gordo -->
+  <button onclick="handleCatChoice('Gordo', this)" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-2.5 text-center hover:border-cyanNeon group">
+    <div class="w-full h-36 rounded-xl overflow-hidden mb-2 bg-zinc-800 relative">
+      <img src="Gordo.jpeg" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300">
+    </div>
+    <div class="font-bold text-xs text-zinc-200 group-hover:text-cyanNeon truncate">Gordo</div>
+  </button>
+
+  <!-- 2. Nininha -->
+  <button onclick="handleCatChoice('Nininha', this)" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-2.5 text-center hover:border-cyanNeon group">
+    <div class="w-full h-36 rounded-xl overflow-hidden mb-2 bg-zinc-800 relative">
+      <img src="Nininha.jpeg" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300">
+    </div>
+    <div class="font-bold text-xs text-zinc-200 group-hover:text-cyanNeon truncate">Nininha</div>
+  </button>
+
+  <!-- 3. Preto -->
+  <button onclick="handleCatChoice('Preto', this)" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-2.5 text-center hover:border-cyanNeon group">
+    <div class="w-full h-36 rounded-xl overflow-hidden mb-2 bg-zinc-800 relative">
+      <img src="Preto.jpeg" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300">
+    </div>
+    <div class="font-bold text-xs text-zinc-200 group-hover:text-cyanNeon truncate">Preto</div>
+  </button>
+
+  <!-- 4. Theo -->
+  <button onclick="handleCatChoice('Theo', this)" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-2.5 text-center hover:border-cyanNeon group">
+    <div class="w-full h-36 rounded-xl overflow-hidden mb-2 bg-zinc-800 relative">
+      <img src="Theo.jpeg" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300">
+    </div>
+    <div class="font-bold text-xs text-zinc-200 group-hover:text-cyanNeon truncate">Theo</div>
+  </button>
+
+</div>
+
+      <!-- MENSAGEM DA PEGADINHA + BOTÃO DE TODOS (Inicia Oculto) -->
+      <div id="secret-all-container" class="hidden text-center mb-5 transition-all duration-500 animate-fade-in">
+        <div class="bg-purpleNeon/10 border border-purpleNeon/40 text-purple-200 p-3.5 rounded-2xl text-xs font-medium mb-3 shadow-glow-purple flex items-center gap-2">
+          <span class="text-lg">🚨</span>
+          <span><strong>Erro crítico:</strong> Achou mesmo que ia conseguir escolher só um entre os seus 4 filhos? 😾💜</span>
+        </div>
+
+        <button onclick="selectAllCats(this)" class="w-full border-2 border-dashed border-cyanNeon/80 bg-cyanNeon/10 hover:bg-cyanNeon/20 text-cyan-200 font-bold py-3 px-4 rounded-2xl transition flex items-center justify-center gap-2 shadow-glow-cyan">
+          <span class="text-lg">🥰</span>
+          <span>Escolher TODOS OS 4! (Impossível separar)</span>
+        </button>
+      </div>
+
+      <button onclick="nextStep(2)" id="btn-next-1" disabled class="w-full btn-gradient disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-2xl transition shadow-lg mt-2 flex items-center justify-center gap-2">
+        <span>Próximo Passo</span>
+        <span>➔</span>
+      </button>
+    </div>
+
+    <!-- PASSO 2: COMIDA EM TELÊMACO BORBA -->
+    <div id="step-2" class="step hidden transition-all duration-300">
+      <div class="text-center mb-5">
+        <h2 class="text-2xl font-extrabold bg-gradient-to-r from-cyanNeon to-purpleNeon bg-clip-text text-transparent mb-6 text-center">
+          O que você está com vontade de comer?
+        </h2>
+      </div>
+
+      <!-- Categorias de Comida -->
+      <div id="food-categories" class="grid grid-cols-2 gap-3 mb-5">
+        <button onclick="selectFoodCategory('Lanches / Burgers')" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-4 text-center hover:border-cyanNeon/60">
+          <div class="text-3xl mb-2">🍔</div>
+          <div class="font-bold text-sm text-zinc-200">Lanches / Burgers</div>
+        </button>
+        <button onclick="selectFoodCategory('Pizzarias')" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-4 text-center hover:border-cyanNeon/60">
+          <div class="text-3xl mb-2">🍕</div>
+          <div class="font-bold text-sm text-zinc-200">Pizzarias</div>
+        </button>
+        <button onclick="selectFoodCategory('Japonesa / Sushi')" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-4 text-center hover:border-cyanNeon/60">
+          <div class="text-3xl mb-2">🍣</div>
+          <div class="font-bold text-sm text-zinc-200">Japonesa / Sushi</div>
+        </button>
+        <button onclick="selectFoodCategory('Açaí / Sorvete')" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-4 text-center hover:border-cyanNeon/60">
+          <div class="text-3xl mb-2">🍨</div>
+          <div class="font-bold text-sm text-zinc-200">Açaí / Sorvete</div>
+        </button>
+      </div>
+
+      <!-- Lista de Lugares Específicos com Fotos Locais -->
+      <div id="places-container" class="hidden mb-5">
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-xs font-bold text-cyanNeon uppercase tracking-wider" id="selected-category-title">Opções em TB:</span>
+          <button onclick="resetFoodCategory()" class="text-xs text-purpleNeon hover:underline flex items-center gap-1">
+            <span>↺ Trocar categoria</span>
+          </button>
+        </div>
+        <div id="places-list" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
+          <!-- Inserido dinamicamente via JS -->
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="nextStep(1)" class="w-1/3 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 font-bold py-3.5 rounded-2xl transition">
+          Voltar
+        </button>
+        <button onclick="nextStep(3)" id="btn-next-2" disabled class="w-2/3 btn-gradient disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-2xl transition shadow-lg flex items-center justify-center gap-2">
+          <span>Próximo</span>
+          <span>➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PASSO 3: VIAGEM (COM A PEGADINHA) -->
+    <div id="step-3" class="step hidden transition-all duration-300">
+      <h2 class="text-2xl font-extrabold bg-gradient-to-r from-cyanNeon to-purpleNeon bg-clip-text text-transparent mb-6 text-center">
+        Se a gente pudesse viajar agora, pra onde iria? ✈️
+      </h2>
+
+      <!-- Opções em Cards -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <button onclick="handleTravelChoice('Praia & Sol', this)" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-4 text-center hover:border-cyanNeon/60 group">
+          <div class="text-3xl mb-2">🏖️</div>
+          <div class="font-bold text-sm text-zinc-200 group-hover:text-cyanNeon">Praia & Sol</div>
+        </button>
+
+        <button onclick="handleTravelChoice('Montanha & Frio', this)" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-4 text-center hover:border-cyanNeon/60 group">
+          <div class="text-3xl mb-2">🏔️</div>
+          <div class="font-bold text-sm text-zinc-200 group-hover:text-cyanNeon">Montanha / Frio</div>
+        </button>
+
+        <button onclick="handleTravelChoice('Natureza / Cachoeira', this)" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-4 text-center hover:border-cyanNeon/60 group">
+          <div class="text-3xl mb-2">🌿</div>
+          <div class="font-bold text-sm text-zinc-200 group-hover:text-cyanNeon">Trilha / Natureza</div>
+        </button>
+
+        <button onclick="handleTravelChoice('Machu Picchu / Peru', this)" class="card-option border border-zinc-800 bg-zinc-900/60 rounded-2xl p-4 text-center hover:border-cyanNeon/60 group">
+          <div class="text-3xl mb-2">🏛️</div>
+          <div class="font-bold text-sm text-zinc-200 group-hover:text-cyanNeon">Machu Picchu / Peru</div>
+        </button>
+      </div>
+
+      <!-- BANNER DA PEGADINHA (Inicialmente oculto) -->
+      <div id="travel-prank-container" class="hidden text-center mb-5 transition-all duration-300">
+        <div class="bg-purple-950/80 border border-purple-500/50 text-cyanNeon p-4 rounded-2xl text-xs font-bold mb-3 shadow-lg animate-pulse">
+          😳🙈 "Pra minha casa?" <br/>
+          <span class="text-zinc-300 font-normal">Aaaata, achei que tava vendo coisa KKKKKKKKKK!</span>
+        </div>
+        <button onclick="confirmTravelChoice()" class="w-full border border-cyanNeon/50 bg-cyanNeon/10 hover:bg-cyanNeon/20 text-cyanNeon font-bold py-2.5 rounded-xl transition text-xs">
+          Compreendido, prosseguir KKKKK ➔
+        </button>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="nextStep(2)" class="w-1/3 bg-zinc-800/80 hover:bg-zinc-700 text-zinc-200 font-bold py-3 rounded-xl transition border border-zinc-700/50">
+          Voltar
+        </button>
+        <button onclick="nextStep(4)" id="btn-next-3" disabled class="w-2/3 bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition shadow-lg">
+          Ver Resumo ✨
+        </button>
+      </div>
+    </div>
+
+    <!-- PASSO 4: RESUMO E CONVITE FINAL -->
+    <div id="step-4" class="step hidden text-center transition-all duration-300">
+      <div class="inline-block p-3 bg-purpleNeon/10 border border-purpleNeon/30 rounded-2xl mb-3 shadow-glow-purple">
+        <span class="text-3xl">⛪✨</span>
+      </div>
+
+      <h2 class="text-2xl font-extrabold bg-gradient-to-r from-cyanNeon via-white to-purpleNeon bg-clip-text text-transparent mb-1">
+        Roteiro Perfeito Montado!
+      </h2>
+      <p class="text-xs text-zinc-400 mb-5">Juntei tudo o que importa com base nas suas escolhas:</p>
+
+      <!-- Card do Resumo -->
+      <div class="bg-zinc-900/80 border border-purpleNeon/30 p-4 rounded-2xl text-left mb-6 space-y-2.5 text-xs shadow-glow-combo">
+        <div class="flex items-start gap-2">
+          <span class="text-base">🐱</span>
+          <div>
+            <span class="text-zinc-400 block text-[10px] uppercase font-bold tracking-wider">Filhos de 4 patas</span>
+            <span id="summary-cats" class="font-bold text-purpleNeon text-sm">...</span>
+          </div>
+        </div>
+        <div class="w-full border-t border-zinc-800/80"></div>
+        <div class="flex items-start gap-2">
+          <span class="text-base">📍</span>
+          <div>
+            <span class="text-zinc-400 block text-[10px] uppercase font-bold tracking-wider">Compromisso Principal</span>
+            <span class="font-bold text-cyanNeon text-sm">Ir juntos na Igreja</span>
+          </div>
+        </div>
+        <div class="w-full border-t border-zinc-800/80"></div>
+        <div class="flex items-start gap-2">
+          <span class="text-base">🍔</span>
+          <div>
+            <span class="text-zinc-400 block text-[10px] uppercase font-bold tracking-wider">Depois do Culto</span>
+            <span id="summary-place" class="font-bold text-purpleNeon text-sm">...</span>
+          </div>
+        </div>
+        <div class="w-full border-t border-zinc-800/80"></div>
+        <div class="flex items-start gap-2">
+          <span class="text-base">✈️</span>
+          <div>
+            <span class="text-zinc-400 block text-[10px] uppercase font-bold tracking-wider">Meta de Viagem</span>
+            <span id="summary-travel" class="font-bold text-cyanNeon text-sm">...</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-base font-bold text-zinc-100 mb-5">Aceita esse convite especial? 😃</h3>
+
+      <!-- Botões de Ação Final (Com botão de fugir) -->
+      <div class="flex items-center justify-center gap-4 relative min-h-[60px] w-full">
+        <button onclick="acceptInvite()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold px-8 py-3.5 rounded-2xl shadow-lg shadow-emerald-950/50 transform active:scale-95 transition z-10 flex items-center gap-2">
+          <span>Bora! 🎉</span>
+        </button>
+
+        <button id="btn-no" onmouseover="moveNoButton()" onclick="moveNoButton()" class="bg-zinc-800 border border-zinc-700 text-zinc-400 font-bold px-5 py-3.5 rounded-2xl transition absolute z-0" style="right: 20px;">
+          Não 😜
+        </button>
+      </div>
+    </div>
+
+    <!-- TELA DE SUCESSO FINAL -->
+    <div id="step-success" class="step hidden text-center py-6 transition-all duration-300">
+      <div class="inline-block p-4 bg-gradient-to-br from-cyanNeon/20 to-purpleNeon/20 border border-cyanNeon/40 rounded-3xl mb-4 shadow-glow-combo">
+        <span class="text-5xl">🥳🚀</span>
+      </div>
+      <h2 class="text-3xl font-black bg-gradient-to-r from-cyanNeon via-white to-purpleNeon bg-clip-text text-transparent mb-2">
+        Perfeito, combinado!
+      </h2>
+      <p class="text-zinc-300 text-sm max-w-sm mx-auto leading-relaxed mb-6">
+        Já salvei todas as opções escolhidas aqui. Te mando os detalhes do nosso programa no WhatsApp! 😉💜
+      </p>
+      <div class="inline-flex items-center gap-2 text-xs text-cyanNeon bg-cyanNeon/10 border border-cyanNeon/30 px-4 py-2 rounded-full">
+        <span>✨ Nosso rolê tá garantido!</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Lugares reais de Telêmaco Borba (TB) com picos de lanche atualizados
+    const tbPlaces = {
+      'Lanches / Burgers': [
+        { name: 'Hamburguês', desc: 'Hambúrguer artesanal sensacional', img: 'hamburgues.jpeg', fallback: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150&auto=format&fit=crop&q=60' },
+        { name: 'Tava Nela', desc: 'Clássico demais pra matar a fome', img: 'tava-nela.jpeg', fallback: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=150&auto=format&fit=crop&q=60' },
+        { name: 'Burger of Brothers', desc: 'Burgers caprichados e saborosos', img: 'burger-of-brothers.jpeg', fallback: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=150&auto=format&fit=crop&q=60' },
+        { name: 'Lanchão da Rodoviária', desc: 'O podrão mais raiz e respeitado de TB', img: 'lanchao-rodoviaria.jpeg', fallback: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=150&auto=format&fit=crop&q=60' }
+      ],
+      'Pizzarias': [
+        { name: 'Itália Pizzaria', desc: 'Rodízio completo e recheado', img: 'pizza1.jpeg', fallback: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=150&auto=format&fit=crop&q=60' },
+        { name: 'La Fornalha Pizzaria', desc: 'Pizza quentinha no forno a lenha', img: 'pizza2.jpeg', fallback: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=150&auto=format&fit=crop&q=60' },
+        { name: 'Torre Pizzaria', desc: 'Massa fina e sabores variados', img: 'pizza3.jpeg', fallback: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=150&auto=format&fit=crop&q=60' }
+      ],
+      'Japonesa / Sushi': [
+        { name: 'Oriental Sushi Restaurante', desc: 'Combinado fresquinho de salmão', img: 'sushi1.jpeg', fallback: 'https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=150&auto=format&fit=crop&q=60' },
+        { name: 'Restaurante Oriental China Master', desc: 'Temakis e hots crocantes', img: 'sushi2.jpeg', fallback: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=150&auto=format&fit=crop&q=60' }
+      ],
+      'Açaí / Sorvete': [
+        { name: 'The Best Açaí Telêmaco Borba', desc: 'Açaí montado com vários complementos', img: 'acai1.jpeg', fallback: 'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=150&auto=format&fit=crop&q=60' },
+        { name: 'Zé do Açaí', desc: 'Sorvete cremoso e taças bem servidas', img: 'acai2.jpeg', fallback: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=150&auto=format&fit=crop&q=60' }
+      ]
+    };
+
+    // Armazenamento das escolhas
+    const choices = { 
+      cats: null, 
+      foodCategory: null, 
+      selectedPlace: null, 
+      travel: null 
+    };
+
+    // Lógica do Passo 1: Gatos
+    function handleCatChoice(catName, element) {
+      const grid = element.closest('.grid');
+      grid.querySelectorAll('button').forEach(btn => btn.classList.remove('card-selected'));
+      element.classList.add('card-selected');
+
+      // Revela o alerta neon carinhoso com a pegadinha
+      const secretContainer = document.getElementById('secret-all-container');
+      secretContainer.classList.remove('hidden');
+    }
+
+    function selectAllCats(element) {
+      choices.cats = "Todos os 4 gatinhos! (Gordo, Nininha, Preto e Theo) 🐱💜";
+      
+      document.querySelectorAll('#step-1 .grid button').forEach(btn => btn.classList.remove('card-selected'));
+      element.classList.add('card-selected');
+      
+      // Libera o botão Próximo
+      document.getElementById('btn-next-1').disabled = false;
+    }
+
+    // Lógica do Passo 2: Comida
+    function selectFoodCategory(category) {
+      choices.foodCategory = category;
+      
+      document.getElementById('food-categories').classList.add('hidden');
+      const placesContainer = document.getElementById('places-container');
+      placesContainer.classList.remove('hidden');
+
+      document.getElementById('selected-category-title').innerText = `Opções de ${category} em TB:`;
+
+      const listEl = document.getElementById('places-list');
+      listEl.innerHTML = '';
+
+      tbPlaces[category].forEach(place => {
+        listEl.innerHTML += `
+          <button onclick="selectSpecificPlace('${place.name}', this)" class="w-full card-option border border-zinc-800 bg-zinc-900/60 rounded-xl p-3 flex items-center gap-3 text-left hover:border-cyanNeon/50 group">
+            <img src="${place.img}" onerror="this.onerror=null; this.src='${place.fallback}';" class="w-12 h-12 rounded-lg object-cover flex-shrink-0 bg-zinc-800">
+            <div class="overflow-hidden">
+              <div class="font-bold text-xs text-zinc-100 group-hover:text-cyanNeon truncate">${place.name}</div>
+              <div class="text-[11px] text-zinc-400 truncate">${place.desc}</div>
+            </div>
+          </button>
+        `;
+      });
+    }
+
+    function resetFoodCategory() {
+      document.getElementById('places-container').classList.add('hidden');
+      document.getElementById('food-categories').classList.remove('hidden');
+      choices.foodCategory = null;
+      choices.selectedPlace = null;
+      document.getElementById('btn-next-2').disabled = true;
+    }
+
+    function selectSpecificPlace(placeName, element) {
+      choices.selectedPlace = placeName;
+      const parent = element.parentElement;
+      parent.querySelectorAll('button').forEach(b => b.classList.remove('card-selected'));
+      element.classList.add('card-selected');
+      document.getElementById('btn-next-2').disabled = false;
+    }
+
+    // Lógica do Passo 3: Viagem (com a pegadinha)
+    let tempTravelChoice = '';
+
+    function handleTravelChoice(value, element) {
+      tempTravelChoice = value;
+      const parent = element.parentElement;
+      parent.querySelectorAll('button').forEach(btn => btn.classList.remove('card-selected'));
+      element.classList.add('card-selected');
+
+      // Mostra o banner da pegadinha
+      document.getElementById('travel-prank-container').classList.remove('hidden');
+    }
+
+    function confirmTravelChoice() {
+      choices.travel = tempTravelChoice;
+      document.getElementById('travel-prank-container').classList.add('hidden');
+      document.getElementById('btn-next-3').disabled = false;
+    }
+
+    // Navegação de Telas
+    function nextStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
+
+      // Atualiza barra de progresso
+      const progress = document.getElementById('progress');
+      progress.style.width = (stepNumber * 25) + '%';
+      document.getElementById('step-indicator').innerText = `Passo ${stepNumber} de 4`;
+
+      const currentStep = document.getElementById(`step-${stepNumber}`);
+      currentStep.classList.remove('hidden');
+
+      // Preenche o resumo no Passo 4
+      if (stepNumber === 4) {
+        document.getElementById('summary-cats').innerText = choices.cats || "Todos os 4 gatinhos! 🐱💜";
+        document.getElementById('summary-place').innerText = choices.selectedPlace || "Lugar especial em TB";
+        document.getElementById('summary-travel').innerText = choices.travel || "Viagem Incrível";
+      }
+    }
+
+    // Animação de fuga do botão "Não"
+    function moveNoButton() {
+      const btn = document.getElementById('btn-no');
+      const randomX = Math.floor(Math.random() * 180) - 90;
+      const randomY = Math.floor(Math.random() * 120) - 60;
+      btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    }
+
+    // Aceitar o convite
+    function acceptInvite() {
+      document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
+      document.getElementById('step-success').classList.remove('hidden');
+      document.getElementById('progress-bar-container').classList.add('hidden');
+
+      // Confetes Neon (Ciano e Roxo)
+      confetti({
+        particleCount: 120,
+        spread: 90,
+        origin: { y: 0.6 },
+        colors: ['#06b6d4', '#a855f7', '#ffffff']
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 80,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#06b6d4', '#a855f7']
+        });
+        confetti({
+          particleCount: 80,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#06b6d4', '#a855f7']
+        });
+      }, 250);
+    }
+  </script>
+</body>
+</html>
